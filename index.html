@@ -707,10 +707,150 @@ footer {
   cursor: pointer;
   font-size: 34px;
 }
-.cart-items {
+.cart-body {
   flex: 1;
   overflow: auto;
-  padding: 20px 24px;
+}
+.cart-items {
+  padding: 20px 24px 6px;
+}
+.checkout-section {
+  margin: 0 24px 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fffafd;
+}
+.checkout-section h4 {
+  margin: 0 0 5px;
+  font-size: 15px;
+}
+.checkout-section > p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #5f5158;
+}
+.form-field input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 10px 11px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+.form-field input:focus {
+  border-color: #d56a94;
+  box-shadow: 0 0 0 3px rgba(212, 58, 120, .08);
+}
+.address-row {
+  display: grid;
+  grid-template-columns: 1.6fr .6fr;
+  gap: 10px;
+}
+.cep-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+.cep-row button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 11px;
+  padding: 0 13px;
+  background: var(--dark);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+}
+.shipping-status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.shipping-options {
+  display: grid;
+  gap: 9px;
+  margin-top: 12px;
+}
+.shipping-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  cursor: pointer;
+  background: #fff;
+}
+.shipping-option.selected {
+  border-color: var(--accent);
+  background: #fff4f8;
+}
+.shipping-option input { accent-color: var(--accent); }
+.shipping-option strong {
+  display: block;
+  font-size: 13px;
+}
+.shipping-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+.shipping-price {
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.cart-breakdown {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 13px;
+  font-size: 13px;
+}
+.cart-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cart-breakdown .grand-total {
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+}
+.checkout-alert {
+  margin-top: 9px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: #fff0f5;
+  color: #8b2c53;
+  font-size: 11px;
+  display: none;
+}
+.checkout-alert.show { display: block; }
+
+@media (max-width: 520px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-field.full { grid-column: auto; }
 }
 .cart-empty {
   padding: 50px 10px;
@@ -1081,22 +1221,88 @@ footer {
       <button class="close-cart" id="closeCart" aria-label="Fechar carrinho">×</button>
     </div>
 
-    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-body">
+      <div class="cart-items" id="cartItems"></div>
+
+      <section class="checkout-section" id="deliverySection">
+        <h4>📦 Dados para entrega</h4>
+        <p>Preencha seus dados e calcule o frete antes do pagamento.</p>
+
+        <div class="form-grid">
+          <div class="form-field full">
+            <label for="customerName">Nome completo *</label>
+            <input id="customerName" autocomplete="name" placeholder="Seu nome completo">
+          </div>
+          <div class="form-field">
+            <label for="customerPhone">Telefone / WhatsApp *</label>
+            <input id="customerPhone" inputmode="tel" autocomplete="tel" placeholder="(27) 99999-9999">
+          </div>
+          <div class="form-field">
+            <label for="customerEmail">E-mail *</label>
+            <input id="customerEmail" type="email" autocomplete="email" placeholder="voce@email.com">
+          </div>
+
+          <div class="form-field full">
+            <label for="customerCep">CEP *</label>
+            <div class="cep-row">
+              <input id="customerCep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+              <button type="button" id="calcShippingBtn">Calcular frete</button>
+            </div>
+          </div>
+
+          <div class="form-field full">
+            <label for="customerStreet">Rua / Avenida *</label>
+            <input id="customerStreet" autocomplete="address-line1" placeholder="Endereço">
+          </div>
+
+          <div class="form-field full">
+            <div class="address-row">
+              <div class="form-field">
+                <label for="customerNumber">Número *</label>
+                <input id="customerNumber" autocomplete="address-line2" placeholder="123">
+              </div>
+              <div class="form-field">
+                <label for="customerComplement">Complemento</label>
+                <input id="customerComplement" placeholder="Apto, bloco...">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="customerNeighborhood">Bairro *</label>
+            <input id="customerNeighborhood" placeholder="Bairro">
+          </div>
+          <div class="form-field">
+            <label for="customerCity">Cidade *</label>
+            <input id="customerCity" autocomplete="address-level2" placeholder="Cidade">
+          </div>
+          <div class="form-field">
+            <label for="customerState">UF *</label>
+            <input id="customerState" maxlength="2" autocomplete="address-level1" placeholder="ES">
+          </div>
+        </div>
+
+        <div class="shipping-status" id="shippingStatus">Informe o CEP para ver as opções de entrega.</div>
+        <div class="shipping-options" id="shippingOptions"></div>
+        <div class="checkout-alert" id="checkoutAlert"></div>
+      </section>
+    </div>
 
     <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total</span>
-        <strong id="cartTotal">R$ 0,00</strong>
+      <div class="cart-breakdown">
+        <div><span>Produtos</span><strong id="productsTotal">R$ 0,00</strong></div>
+        <div><span>Frete</span><strong id="shippingTotal">A calcular</strong></div>
+        <div class="grand-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
       </div>
-      <button class="btn primary full" id="checkoutBtn">Pagar online com segurança</button>
-      <small>Pix, cartão, boleto e demais opções disponíveis serão processados pelo Mercado Pago.</small>
+      <button class="btn primary full" id="checkoutBtn">Continuar para pagamento</button>
+      <small>O frete selecionado será somado ao pedido e o pagamento será processado pelo Mercado Pago.</small>
     </div>
   </aside>
 
   <div class="toast" id="toast">Produto adicionado ao carrinho ✨</div>
 
   <script>
-const STORE_WHATSAPP = "5527988847061"; // TROQUE pelo WhatsApp da loja com DDI + DDD + número.
+const STORE_WHATSAPP = "5500000000000"; // TROQUE pelo WhatsApp da loja com DDI + DDD + número.
 
 const products = [
   { id: 1, name: "Lip Gloss Triple Glow", category: "labios", price: 19.99, oldPrice: 26.97, badge: "Oferta", shape: "slim", label: "Gloss" },
@@ -1110,6 +1316,8 @@ const products = [
 ];
 
 let cart = JSON.parse(localStorage.getItem("jlmakeup-cart") || "[]");
+let selectedShipping = null;
+let shippingOptionsCache = [];
 
 const productGrid = document.getElementById("productGrid");
 const cartDrawer = document.getElementById("cartDrawer");
@@ -1117,6 +1325,11 @@ const cartOverlay = document.getElementById("cartOverlay");
 const cartItems = document.getElementById("cartItems");
 const cartCount = document.getElementById("cartCount");
 const cartTotal = document.getElementById("cartTotal");
+const productsTotal = document.getElementById("productsTotal");
+const shippingTotal = document.getElementById("shippingTotal");
+const shippingStatus = document.getElementById("shippingStatus");
+const shippingOptionsEl = document.getElementById("shippingOptions");
+const checkoutAlert = document.getElementById("checkoutAlert");
 const toast = document.getElementById("toast");
 
 const money = value => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -1179,13 +1392,32 @@ function persistCart() {
   renderCart();
 }
 
+function getProductsSubtotal() {
+  return cart.reduce((sum, item) => {
+    const product = products.find(p => p.id === item.id);
+    return sum + (product ? product.price * item.qty : 0);
+  }, 0);
+}
+
+function renderTotals() {
+  const subtotal = getProductsSubtotal();
+  const shipping = selectedShipping ? Number(selectedShipping.price) : 0;
+  productsTotal.textContent = money(subtotal);
+  shippingTotal.textContent = selectedShipping ? money(shipping) : "A calcular";
+  cartTotal.textContent = money(subtotal + shipping);
+}
+
 function renderCart() {
   const quantity = cart.reduce((sum, item) => sum + item.qty, 0);
   cartCount.textContent = quantity;
 
   if (!cart.length) {
     cartItems.innerHTML = `<div class="cart-empty">Seu carrinho está vazio.<br>Escolha seus favoritos ✨</div>`;
-    cartTotal.textContent = money(0);
+    selectedShipping = null;
+    shippingOptionsCache = [];
+    shippingOptionsEl.innerHTML = "";
+    shippingStatus.textContent = "Adicione produtos para calcular a entrega.";
+    renderTotals();
     return;
   }
 
@@ -1212,12 +1444,7 @@ function renderCart() {
     `;
   }).join("");
 
-  const total = cart.reduce((sum, item) => {
-    const product = products.find(p => p.id === item.id);
-    return sum + product.price * item.qty;
-  }, 0);
-
-  cartTotal.textContent = money(total);
+  renderTotals();
 }
 
 function openCart() {
@@ -1237,9 +1464,197 @@ function showToast() {
   setTimeout(() => toast.classList.remove("show"), 1700);
 }
 
+
+function cleanCep(value) {
+  return String(value || "").replace(/\D/g, "").slice(0, 8);
+}
+
+function maskCep(value) {
+  const digits = cleanCep(value);
+  return digits.length > 5 ? `${digits.slice(0,5)}-${digits.slice(5)}` : digits;
+}
+
+function maskPhone(value) {
+  const d = String(value || "").replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+}
+
+function showCheckoutAlert(message) {
+  checkoutAlert.textContent = message;
+  checkoutAlert.classList.add("show");
+}
+
+function hideCheckoutAlert() {
+  checkoutAlert.classList.remove("show");
+  checkoutAlert.textContent = "";
+}
+
+function getCustomerData() {
+  return {
+    name: document.getElementById("customerName").value.trim(),
+    phone: document.getElementById("customerPhone").value.trim(),
+    email: document.getElementById("customerEmail").value.trim(),
+    address: {
+      postal_code: cleanCep(document.getElementById("customerCep").value),
+      street: document.getElementById("customerStreet").value.trim(),
+      number: document.getElementById("customerNumber").value.trim(),
+      complement: document.getElementById("customerComplement").value.trim(),
+      neighborhood: document.getElementById("customerNeighborhood").value.trim(),
+      city: document.getElementById("customerCity").value.trim(),
+      state: document.getElementById("customerState").value.trim().toUpperCase()
+    }
+  };
+}
+
+function validateCustomer(customer) {
+  if (!customer.name || customer.name.length < 3) return "Informe o nome completo.";
+  if (customer.phone.replace(/\D/g, "").length < 10) return "Informe um telefone/WhatsApp válido.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) return "Informe um e-mail válido.";
+  if (customer.address.postal_code.length !== 8) return "Informe um CEP válido.";
+  if (!customer.address.street) return "Informe a rua/avenida.";
+  if (!customer.address.number) return "Informe o número do endereço.";
+  if (!customer.address.neighborhood) return "Informe o bairro.";
+  if (!customer.address.city) return "Informe a cidade.";
+  if (customer.address.state.length !== 2) return "Informe a UF com 2 letras.";
+  return null;
+}
+
+async function lookupCep() {
+  const cepInput = document.getElementById("customerCep");
+  const cep = cleanCep(cepInput.value);
+  cepInput.value = maskCep(cep);
+
+  if (cep.length !== 8) {
+    showCheckoutAlert("Digite um CEP com 8 números.");
+    return false;
+  }
+
+  try {
+    shippingStatus.textContent = "Buscando endereço...";
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await response.json();
+
+    if (!response.ok || data.erro) throw new Error("CEP não encontrado");
+
+    document.getElementById("customerStreet").value = data.logradouro || "";
+    document.getElementById("customerNeighborhood").value = data.bairro || "";
+    document.getElementById("customerCity").value = data.localidade || "";
+    document.getElementById("customerState").value = data.uf || "";
+    hideCheckoutAlert();
+    return true;
+  } catch (error) {
+    showCheckoutAlert("Não consegui localizar esse CEP. Confira e tente novamente.");
+    shippingStatus.textContent = "CEP não localizado.";
+    return false;
+  }
+}
+
+function formatDelivery(option) {
+  if (option.delivery_range && (option.delivery_range.min || option.delivery_range.max)) {
+    const min = option.delivery_range.min;
+    const max = option.delivery_range.max;
+    if (min && max && min !== max) return `${min} a ${max} dias úteis`;
+    return `${min || max} dias úteis`;
+  }
+  if (option.delivery_time) return `até ${option.delivery_time} dias úteis`;
+  return "prazo informado pela transportadora";
+}
+
+function renderShippingOptions(options) {
+  shippingOptionsCache = options;
+  selectedShipping = null;
+  renderTotals();
+
+  if (!options.length) {
+    shippingOptionsEl.innerHTML = "";
+    shippingStatus.textContent = "Nenhuma modalidade de frete disponível para esse CEP.";
+    return;
+  }
+
+  shippingStatus.textContent = "Escolha uma opção de entrega:";
+  shippingOptionsEl.innerHTML = options.map((option, idx) => `
+    <label class="shipping-option" data-shipping-index="${idx}">
+      <input type="radio" name="shippingOption" value="${idx}">
+      <div>
+        <strong>${option.company ? `${option.company} • ` : ""}${option.name}</strong>
+        <small>${formatDelivery(option)}</small>
+      </div>
+      <span class="shipping-price">${money(Number(option.price))}</span>
+    </label>
+  `).join("");
+
+  shippingOptionsEl.querySelectorAll('input[name="shippingOption"]').forEach(input => {
+    input.addEventListener("change", () => {
+      const idx = Number(input.value);
+      selectedShipping = shippingOptionsCache[idx];
+      document.querySelectorAll(".shipping-option").forEach(el => el.classList.remove("selected"));
+      input.closest(".shipping-option").classList.add("selected");
+      hideCheckoutAlert();
+      renderTotals();
+    });
+  });
+}
+
+async function calculateShipping() {
+  if (!cart.length) {
+    showCheckoutAlert("Adicione pelo menos um produto ao carrinho.");
+    return;
+  }
+
+  const cepOk = await lookupCep();
+  if (!cepOk) return;
+
+  const cep = cleanCep(document.getElementById("customerCep").value);
+  const button = document.getElementById("calcShippingBtn");
+  const oldText = button.textContent;
+
+  try {
+    button.disabled = true;
+    button.textContent = "Calculando...";
+    shippingStatus.textContent = "Consultando a SuperFrete...";
+    shippingOptionsEl.innerHTML = "";
+    selectedShipping = null;
+    renderTotals();
+
+    const response = await fetch("/.netlify/functions/shipping-quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postal_code: cep })
+    });
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.error || "Falha no cálculo do frete.");
+    renderShippingOptions(data.options || []);
+  } catch (error) {
+    console.error(error);
+    shippingStatus.textContent = "Não foi possível calcular o frete agora.";
+    showCheckoutAlert(error.message || "Erro ao consultar a SuperFrete.");
+  } finally {
+    button.disabled = false;
+    button.textContent = oldText;
+  }
+}
+
 async function checkoutOnline() {
   if (!cart.length) {
     alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  hideCheckoutAlert();
+  const customer = getCustomerData();
+  const validationError = validateCustomer(customer);
+  if (validationError) {
+    showCheckoutAlert(validationError);
+    document.getElementById("deliverySection").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (!selectedShipping) {
+    showCheckoutAlert("Calcule o frete e escolha uma opção de entrega antes de pagar.");
     return;
   }
 
@@ -1251,7 +1666,11 @@ async function checkoutOnline() {
     button.textContent = "Abrindo pagamento...";
 
     const payload = {
-      items: cart.map(item => ({ id: item.id, qty: item.qty }))
+      items: cart.map(item => ({ id: item.id, qty: item.qty })),
+      customer,
+      shipping: {
+        service_id: selectedShipping.id
+      }
     };
 
     const response = await fetch("/.netlify/functions/create-preference", {
@@ -1266,13 +1685,17 @@ async function checkoutOnline() {
       throw new Error(data.error || "Não foi possível iniciar o pagamento.");
     }
 
+    localStorage.setItem("jlmakeup-last-order", JSON.stringify({
+      customer,
+      shipping: data.shipping || selectedShipping,
+      products_total: getProductsSubtotal(),
+      created_at: new Date().toISOString()
+    }));
+
     window.location.href = data.checkout_url;
   } catch (error) {
     console.error(error);
-    alert(
-      "O pagamento online ainda não está ativado neste endereço. " +
-      "Depois de publicar no Netlify e configurar a credencial do Mercado Pago, este botão passará a funcionar."
-    );
+    showCheckoutAlert(error.message || "Não foi possível abrir o pagamento.");
   } finally {
     button.disabled = false;
     button.textContent = originalText;
@@ -1291,6 +1714,21 @@ document.getElementById("cartBtn").addEventListener("click", openCart);
 document.getElementById("closeCart").addEventListener("click", closeCart);
 document.getElementById("cartOverlay").addEventListener("click", closeCart);
 document.getElementById("checkoutBtn").addEventListener("click", checkoutOnline);
+document.getElementById("calcShippingBtn").addEventListener("click", calculateShipping);
+document.getElementById("customerCep").addEventListener("input", e => {
+  e.target.value = maskCep(e.target.value);
+  selectedShipping = null;
+  shippingOptionsEl.innerHTML = "";
+  shippingStatus.textContent = "CEP alterado. Calcule o frete novamente.";
+  renderTotals();
+});
+document.getElementById("customerCep").addEventListener("blur", () => {
+  const cep = cleanCep(document.getElementById("customerCep").value);
+  if (cep.length === 8 && !shippingOptionsCache.length) lookupCep();
+});
+document.getElementById("customerPhone").addEventListener("input", e => {
+  e.target.value = maskPhone(e.target.value);
+});
 
 const menu = document.getElementById("mobileMenu");
 document.getElementById("menuBtn").addEventListener("click", () => menu.classList.add("open"));
