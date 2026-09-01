@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JLMAKEUP — maquiagem e cosméticos com ofertas especiais e entrega para todo o Brasil." />
+  <title>JLMAKEUP | Beleza que combina com você</title>
+<style>
+:root {
+  --bg: #fffafc;
+  --surface: #ffffff;
+  --text: #20181d;
+  --muted: #746970;
+  --accent: #d43a78;
+  --accent-dark: #a51f57;
+  --soft: #f8dce7;
+  --soft-2: #f5edf1;
+  --line: #eadde3;
+  --dark: #1d151a;
+  --shadow: 0 20px 60px rgba(63, 28, 45, .12);
+  --radius: 24px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+body.no-scroll { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+img { max-width: 100%; display: block; }
+
+.topbar {
+  display: flex;
+  justify-content: center;
+  gap: 42px;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--dark);
+  letter-spacing: .02em;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  padding: 18px min(6vw, 86px);
+  border-bottom: 1px solid rgba(234, 221, 227, .85);
+  background: rgba(255, 250, 252, .92);
+  backdrop-filter: blur(16px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+}
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), #f084ac);
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(212, 58, 120, .24);
+}
+.brand-text {
+  font-weight: 800;
+  letter-spacing: .18em;
+  font-size: 15px;
+}
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.desktop-nav a { position: relative; }
+.desktop-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%; bottom: -6px;
+  height: 2px;
+  background: var(--accent);
+  transition: .25s;
+}
+.desktop-nav a:hover::after { right: 0; }
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.icon-btn, .cart-btn {
+  border: 0;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(63, 28, 45, .08);
+}
+.icon-btn {
+  display: none;
+  width: 46px;
+  height: 46px;
+}
+.cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-weight: 700;
+}
+.cart-btn b {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 11px;
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  width: min(82vw, 330px);
+  padding: 90px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transform: translateX(-105%);
+  transition: .28s ease;
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  padding: 15px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+.mobile-menu a:hover { background: var(--soft-2); }
+.close-menu {
+  position: absolute;
+  top: 22px; right: 22px;
+  border: 0; background: none;
+  font-size: 34px;
+  cursor: pointer;
+}
+
+.hero {
+  min-height: 690px;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  align-items: center;
+  gap: 48px;
+  padding: 72px min(7vw, 105px);
+  overflow: hidden;
+}
+.hero-copy { max-width: 720px; }
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+}
+.eyebrow.light { color: #ffd9e8; }
+.hero h1, .section-heading h2, .about h2, .promo-banner h2, .newsletter h2 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  line-height: 1.05;
+}
+.hero h1 {
+  max-width: 760px;
+  font-size: clamp(44px, 6vw, 82px);
+  letter-spacing: -.035em;
+}
+
+.hero-subtitle {
+  margin-top: 18px;
+  max-width: 680px;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.25;
+  font-weight: 800;
+  color: var(--accent-dark);
+  letter-spacing: -0.02em;
+}
+
+.hero-copy > p {
+  max-width: 650px;
+  margin: 24px 0 28px;
+  color: var(--muted);
+  font-size: 18px;
+}
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn.primary {
+  color: white;
+  background: linear-gradient(135deg, var(--accent), #ea6698);
+  box-shadow: 0 14px 30px rgba(212, 58, 120, .22);
+}
+.btn.secondary {
+  border: 1px solid var(--line);
+  background: white;
+}
+.btn.white {
+  color: var(--accent-dark);
+  background: white;
+}
+.btn.ghost-light {
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.3);
+}
+.btn.full { width: 100%; }
+
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 560px;
+  border-radius: 48px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255,255,255,.9), transparent 30%),
+    linear-gradient(145deg, #f8d9e6, #f7b9cf 55%, #e7759d);
+  box-shadow: 0 34px 80px rgba(107, 37, 67, .18);
+}
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(2px);
+  background: rgba(255,255,255,.52);
+}
+.glow-1 { width: 290px; height: 290px; top: -80px; right: -60px; }
+.glow-2 { width: 190px; height: 190px; bottom: -40px; left: -40px; }
+
+.product-orbit {
+  position: absolute;
+  inset: 0;
+}
+.makeup-card {
+  position: absolute;
+  filter: drop-shadow(0 24px 24px rgba(70, 24, 44, .22));
+}
+.lipstick {
+  left: 14%;
+  top: 18%;
+  width: 110px;
+  height: 310px;
+  transform: rotate(-12deg);
+}
+.lipstick .cap {
+  position: absolute;
+  left: 25px;
+  width: 60px;
+  height: 135px;
+  border-radius: 20px 20px 8px 8px;
+  background: linear-gradient(145deg, #22161d, #57303f);
+}
+.lipstick .tube {
+  position: absolute;
+  bottom: 0;
+  width: 110px;
+  height: 205px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #f9f1f4, #b594a3);
+}
+.lipstick .tube::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: -48px;
+  width: 54px;
+  height: 96px;
+  border-radius: 22px 22px 8px 8px;
+  background: linear-gradient(160deg, #eb4a83, #ac1f58);
+}
+
+.bottle {
+  right: 12%;
+  top: 17%;
+  width: 170px;
+  height: 310px;
+  transform: rotate(8deg);
+}
+.bottle-cap {
+  width: 74px;
+  height: 78px;
+  margin: 0 auto -10px;
+  border-radius: 18px 18px 6px 6px;
+  background: linear-gradient(160deg, #1b1418, #5f414e);
+}
+.bottle-body {
+  display: grid;
+  place-items: center;
+  width: 170px;
+  height: 245px;
+  border-radius: 46px 46px 30px 30px;
+  border: 2px solid rgba(255,255,255,.65);
+  background: linear-gradient(150deg, rgba(255,255,255,.68), rgba(240,148,183,.38));
+  backdrop-filter: blur(4px);
+}
+.bottle-body span {
+  font-family: "Playfair Display", serif;
+  font-size: 54px;
+  color: #fff;
+}
+
+.compact {
+  left: 35%;
+  bottom: 8%;
+  display: grid;
+  place-items: center;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2f2028, #b3748d);
+  border: 10px solid rgba(255,255,255,.25);
+}
+.compact span {
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-size: 54px;
+}
+
+.hero-badge {
+  position: absolute;
+  right: 6%;
+  bottom: 8%;
+  display: grid;
+  place-items: center;
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  text-align: center;
+  color: var(--accent-dark);
+  background: rgba(255,255,255,.86);
+  transform: rotate(8deg);
+  box-shadow: 0 12px 28px rgba(86, 35, 56, .18);
+}
+.hero-badge strong { font-family: "Playfair Display", serif; font-size: 22px; }
+
+.benefit-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin: 0 min(7vw, 105px);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--line);
+}
+.benefit-strip article {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px;
+  background: var(--surface);
+}
+.benefit-icon { font-size: 28px; }
+.benefit-strip strong { display: block; font-size: 14px; }
+.benefit-strip small { color: var(--muted); }
+
+.shop-section {
+  padding: 110px min(7vw, 105px);
+}
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 32px;
+}
+.section-heading.centered {
+  display: block;
+  text-align: center;
+}
+.section-heading h2, .about h2, .promo-banner h2, .newsletter h2 {
+  font-size: clamp(34px, 4vw, 54px);
+}
+.section-heading > p {
+  max-width: 480px;
+  color: var(--muted);
+  margin: 0;
+}
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.filter {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 700;
+}
+.filter.active {
+  color: #fff;
+  background: var(--dark);
+  border-color: var(--dark);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+.product-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  transition: .22s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+.product-image {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #f9edf2, #f5d3df);
+}
+.product-image::before {
+  content: "";
+  position: absolute;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  filter: blur(2px);
+}
+.product-shape {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 125px;
+  height: 170px;
+  border-radius: 38px;
+  color: #fff;
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  background: linear-gradient(145deg, #d43a78, #743044);
+  box-shadow: 0 24px 38px rgba(83, 28, 50, .25);
+}
+.product-shape.round { width: 150px; height: 150px; border-radius: 50%; }
+.product-shape.slim { width: 74px; height: 190px; border-radius: 24px; }
+.product-shape.soft { background: linear-gradient(145deg, #f19cbc, #c85b82); }
+.product-shape.dark { background: linear-gradient(145deg, #31212a, #86526a); }
+.product-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 3;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--accent);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.product-info { padding: 18px; }
+.product-info small {
+  color: var(--accent);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.product-info h3 {
+  min-height: 50px;
+  margin: 8px 0 10px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.price {
+  font-size: 21px;
+  font-weight: 800;
+}
+.old-price {
+  margin-left: 7px;
+  color: #a99aa1;
+  font-size: 12px;
+  text-decoration: line-through;
+}
+.add-btn {
+  width: 42px; height: 42px;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--dark);
+  cursor: pointer;
+  font-size: 20px;
+  transition: .2s;
+}
+.add-btn:hover { background: var(--accent); }
+
+.promo-banner {
+  margin: 0 min(7vw, 105px);
+  padding: 52px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  border-radius: 30px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.15), transparent 28%),
+    linear-gradient(135deg, #c92f6b, #792443);
+  overflow: hidden;
+}
+.promo-banner p { max-width: 670px; color: #ffe8f0; }
+
+.about {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  align-items: center;
+  gap: 70px;
+  padding: 110px min(7vw, 105px);
+}
+.about-card {
+  min-height: 520px;
+  border-radius: 32px;
+  box-shadow: var(--shadow);
+}
+.about-visual {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.8), transparent 22%),
+    linear-gradient(145deg, #f6c7d8, #e96d9b);
+}
+.about-monogram {
+  display: grid;
+  place-items: center;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: "Playfair Display", serif;
+  font-size: 70px;
+  border: 1px solid rgba(255,255,255,.55);
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(10px);
+}
+.about-visual p {
+  margin: 22px 0 0;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .36em;
+}
+.about-copy p { color: var(--muted); font-size: 17px; }
+.text-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.social-proof {
+  padding: 90px min(7vw, 105px) 110px;
+  background: #fff;
+}
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.review {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--bg);
+}
+.stars { color: #d43a78; letter-spacing: 3px; }
+.review p { font-size: 17px; }
+.review span { color: var(--muted); font-size: 13px; font-weight: 700; }
+
+.newsletter {
+  margin: 0;
+  padding: 72px min(7vw, 105px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  color: #fff;
+  background: var(--dark);
+}
+.newsletter p { color: #d6c7ce; }
+.contact-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+
+footer {
+  padding: 55px min(7vw, 105px) 30px;
+  background: #100b0e;
+  color: #fff;
+}
+.footer-brand p { color: #ab9fa5; }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 28px 0;
+  color: #d7cbd1;
+  font-size: 14px;
+}
+.footer-bottom {
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #8e8288;
+  font-size: 12px;
+}
+
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 79;
+  background: rgba(15, 9, 12, .42);
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+}
+.cart-overlay.show { opacity: 1; pointer-events: auto; }
+.cart-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 80;
+  width: min(92vw, 450px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  transform: translateX(105%);
+  transition: .28s ease;
+  box-shadow: -20px 0 60px rgba(35, 15, 24, .18);
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.cart-header h3 { margin: 0; font-size: 26px; }
+.close-cart {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 34px;
+}
+.cart-body {
+  flex: 1;
+  overflow: auto;
+}
+.cart-items {
+  padding: 20px 24px 6px;
+}
+.checkout-section {
+  margin: 0 24px 22px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fffafd;
+}
+.checkout-section h4 {
+  margin: 0 0 5px;
+  font-size: 15px;
+}
+.checkout-section > p {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #5f5158;
+}
+.form-field input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: 10px 11px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+.form-field input:focus {
+  border-color: #d56a94;
+  box-shadow: 0 0 0 3px rgba(212, 58, 120, .08);
+}
+.address-row {
+  display: grid;
+  grid-template-columns: 1.6fr .6fr;
+  gap: 10px;
+}
+.cep-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+.cep-row button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 11px;
+  padding: 0 13px;
+  background: var(--dark);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+}
+.shipping-status {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.shipping-options {
+  display: grid;
+  gap: 9px;
+  margin-top: 12px;
+}
+.shipping-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  cursor: pointer;
+  background: #fff;
+}
+.shipping-option.selected {
+  border-color: var(--accent);
+  background: #fff4f8;
+}
+.shipping-option input { accent-color: var(--accent); }
+.shipping-option strong {
+  display: block;
+  font-size: 13px;
+}
+.shipping-option small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
+.shipping-price {
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.cart-breakdown {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 13px;
+  font-size: 13px;
+}
+.cart-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cart-breakdown .grand-total {
+  padding-top: 9px;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+}
+.checkout-alert {
+  margin-top: 9px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: #fff0f5;
+  color: #8b2c53;
+  font-size: 11px;
+  display: none;
+}
+.checkout-alert.show { display: block; }
+
+@media (max-width: 520px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-field.full { grid-column: auto; }
+}
+.cart-empty {
+  padding: 50px 10px;
+  text-align: center;
+  color: var(--muted);
+}
+.cart-item {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cart-thumb {
+  display: grid;
+  place-items: center;
+  width: 58px; height: 58px;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(145deg, #e2789f, #8c3555);
+  font-family: "Playfair Display", serif;
+}
+.cart-item h4 { margin: 0 0 3px; font-size: 14px; }
+.cart-item p { margin: 0; color: var(--muted); font-size: 12px; }
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
+}
+.qty-controls button {
+  width: 26px; height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+}
+.remove-btn {
+  border: 0;
+  background: none;
+  color: #a45d75;
+  cursor: pointer;
+  font-size: 16px;
+}
+.cart-footer {
+  padding: 22px 24px 26px;
+  border-top: 1px solid var(--line);
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.cart-total strong { font-size: 22px; }
+.cart-footer small {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 120;
+  transform: translate(-50%, 20px);
+  padding: 13px 18px;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--dark);
+  opacity: 0;
+  pointer-events: none;
+  transition: .24s;
+  box-shadow: var(--shadow);
+}
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 1100px) {
+  .desktop-nav { display: none; }
+  .site-header { grid-template-columns: 1fr auto; }
+  .icon-btn { display: inline-grid; place-items: center; }
+  .hero { grid-template-columns: 1fr; padding-top: 58px; }
+  .hero-visual { min-height: 500px; }
+  .benefit-strip { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    justify-content: flex-start;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 24px;
+  }
+  .site-header { padding: 14px 18px; }
+  .brand-text { display: none; }
+  .cart-btn span { display: none; }
+  .hero { padding: 48px 20px 60px; gap: 30px; min-height: auto; }
+  .hero h1 { font-size: 46px; }
+  .hero-copy > p { font-size: 16px; }
+  .hero-visual { min-height: 390px; border-radius: 30px; }
+  .lipstick { transform: scale(.76) rotate(-12deg); left: 5%; top: 8%; }
+  .bottle { transform: scale(.74) rotate(8deg); right: 0; top: 7%; }
+  .compact { transform: scale(.72); left: 25%; bottom: 0; }
+  .hero-badge { width: 90px; height: 90px; font-size: 12px; }
+  .benefit-strip {
+    margin: 0 20px;
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+  .shop-section { padding: 80px 20px; }
+  .section-heading { display: block; }
+  .section-heading > p { margin-top: 14px; }
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .product-image { min-height: 190px; }
+  .product-shape { transform: scale(.78); }
+  .product-info { padding: 14px; }
+  .product-info h3 { font-size: 14px; }
+  .price { font-size: 18px; }
+  .promo-banner {
+    margin: 0 20px;
+    padding: 36px 26px;
+    display: block;
+  }
+  .promo-banner .btn { margin-top: 18px; }
+  .about {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 80px 20px;
+  }
+  .about-card { min-height: 360px; }
+  .social-proof { padding: 80px 20px; }
+  .review-grid { grid-template-columns: 1fr; }
+  .newsletter {
+    display: block;
+    padding: 58px 20px;
+  }
+  .contact-buttons { margin-top: 24px; }
+  footer { padding: 48px 20px 28px; }
+  .footer-bottom { display: block; }
+  .footer-bottom span { display: block; margin-top: 8px; }
+}
+
+@media (max-width: 480px) {
+  .product-grid { grid-template-columns: 1fr; }
+  .product-image { min-height: 250px; }
+}
+
+</style>
+  <!-- Versão auto-contida: CSS e JavaScript embutidos -->
+</head>
+<body>
+  <div class="topbar">
+    <span>✨ Ofertas selecionadas toda semana</span>
+    <span>🚚 Entregamos para todo o Brasil</span>
+    <span>💬 Atendimento rápido pelo WhatsApp</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="JLMAKEUP">
+      <span class="brand-mark">JL</span>
+      <span class="brand-text">MAKEUP</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+      <button class="cart-btn" id="cartBtn" aria-label="Abrir carrinho">
+        🛍️ <span>Carrinho</span> <b id="cartCount">0</b>
+      </button>
+    </div>
+  </header>
+
+  <aside class="mobile-menu" id="mobileMenu">
+    <button class="close-menu" id="closeMenu" aria-label="Fechar menu">×</button>
+    <a href="#inicio">Início</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#beneficios">Benefícios</a>
+    <a href="#contato">Contato</a>
+  </aside>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <span class="eyebrow">JLMAKEUP • Sua beleza, sua escolha</span>
+        <h1>Maquiagem linda, preços incríveis e uma experiência de compra leve.</h1>
+        <div class="hero-subtitle">Os queridinhos da beleza, preços que apaixonam e novidades que você vai querer garantir.</div>
+        <p>
+          Descubra produtos para realçar sua beleza, montar sua nécessaire e aproveitar promoções que realmente valem a pena.
+        </p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#produtos">Ver produtos</a>
+          <a class="btn secondary" href="#contato">Falar no WhatsApp</a>
+        </div>
+        <div class="hero-trust">
+          <span>✓ Compra fácil</span>
+          <span>✓ Atendimento humano</span>
+          <span>✓ Entrega nacional</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="product-orbit">
+          <div class="makeup-card lipstick">
+            <div class="cap"></div>
+            <div class="tube"></div>
+          </div>
+          <div class="makeup-card bottle">
+            <div class="bottle-cap"></div>
+            <div class="bottle-body"><span>JL</span></div>
+          </div>
+          <div class="makeup-card compact">
+            <span>JL</span>
+          </div>
+        </div>
+        <div class="hero-badge">Beauty<br><strong>Drop</strong></div>
+      </div>
+    </section>
+
+    <section class="benefit-strip" id="beneficios">
+      <article>
+        <span class="benefit-icon">🚚</span>
+        <div><strong>Entrega nacional</strong><small>Compre de onde estiver</small></div>
+      </article>
+      <article>
+        <span class="benefit-icon">💳</span>
+        <div><strong>Compra facilitada</strong><small>Finalize seu pedido em poucos passos</small></div>
+      </article>
+      <article>
+        <span class="benefit-icon">💖</span>
+        <div><strong>Curadoria JLMAKEUP</strong><small>Produtos escolhidos para você</small></div>
+      </article>
+      <article>
+        <span class="benefit-icon">📲</span>
+        <div><strong>Suporte pelo WhatsApp</strong><small>Atendimento direto e rápido</small></div>
+      </article>
+    </section>
+
+    <section class="shop-section" id="produtos">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Mais desejados</span>
+          <h2>Produtos em destaque</h2>
+        </div>
+        <p>Monte seu carrinho, calcule o frete pelo CEP e finalize seu pedido com segurança.</p>
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="todos">Todos</button>
+        <button class="filter" data-filter="labios">Lábios</button>
+        <button class="filter" data-filter="pele">Pele</button>
+        <button class="filter" data-filter="olhos">Olhos</button>
+        <button class="filter" data-filter="corpo">Corpo</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="promo-banner">
+      <div>
+        <span class="eyebrow light">Oferta especial</span>
+        <h2>Monte seu kit de beleza e economize mais.</h2>
+        <p>Crie combinações com seus produtos favoritos e aproveite as melhores ofertas da JLMAKEUP.</p>
+      </div>
+      <a href="#produtos" class="btn white">Quero montar meu kit</a>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="about-card about-visual">
+        <div class="about-monogram">JL</div>
+        <p>MAKEUP</p>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">Sobre a JLMAKEUP</span>
+        <h2>Beleza acessível, atendimento próximo e ofertas que fazem sentido.</h2>
+        <p>
+          A JLMAKEUP nasceu para tornar a compra de maquiagem mais simples, bonita e acessível. Nossa proposta é unir preço, variedade e atendimento próximo para criar uma experiência que dê vontade de voltar.
+        </p>
+        <p>
+          Acompanhe as novidades, lançamentos e promoções exclusivas pelas nossas redes sociais.
+        </p>
+        <a href="#contato" class="text-link">Falar com a JLMAKEUP →</a>
+      </div>
+    </section>
+
+    <section class="social-proof">
+      <div class="section-heading centered">
+        <div>
+          <span class="eyebrow">Por que comprar com a gente?</span>
+          <h2>Uma loja pensada para encantar</h2>
+        </div>
+      </div>
+
+      <div class="review-grid">
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Produtos lindos, atendimento rápido e muito carinho em cada pedido.”</p>
+          <span>Cliente JLMAKEUP</span>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Adorei a experiência. Fácil de escolher e falar com a loja.”</p>
+          <span>Cliente JLMAKEUP</span>
+        </article>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“As promoções são ótimas e sempre tem novidade chegando.”</p>
+          <span>Cliente JLMAKEUP</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="newsletter" id="contato">
+      <div>
+        <span class="eyebrow light">Fique por dentro</span>
+        <h2>Receba promoções e novidades da JLMAKEUP.</h2>
+        <p>Entre para a lista de clientes e acompanhe as ofertas especiais.</p>
+      </div>
+      <div class="contact-buttons">
+        <a class="btn white" id="whatsappDirect" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        <a class="btn ghost-light" href="https://instagram.com/jlmakeup_oficial" target="_blank" rel="noopener">Ver Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <div class="brand">
+        <span class="brand-mark">JL</span>
+        <span class="brand-text">MAKEUP</span>
+      </div>
+      <p>Beleza, praticidade e preço para você.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#produtos">Produtos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+      <a href="#inicio">Voltar ao topo ↑</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JLMAKEUP. Todos os direitos reservados.</span>
+      <span>Site demonstrativo pronto para personalização.</span>
+    </div>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho de compras">
+    <div class="cart-header">
+      <div>
+        <span class="eyebrow">Seu pedido</span>
+        <h3>Carrinho</h3>
+      </div>
+      <button class="close-cart" id="closeCart" aria-label="Fechar carrinho">×</button>
+    </div>
+
+    <div class="cart-body">
+      <div class="cart-items" id="cartItems"></div>
+
+      <section class="checkout-section" id="deliverySection">
+        <h4>📦 Dados para entrega</h4>
+        <p>Preencha seus dados e calcule o frete antes do pagamento.</p>
+
+        <div class="form-grid">
+          <div class="form-field full">
+            <label for="customerName">Nome completo *</label>
+            <input id="customerName" autocomplete="name" placeholder="Seu nome completo">
+          </div>
+          <div class="form-field">
+            <label for="customerPhone">Telefone / WhatsApp *</label>
+            <input id="customerPhone" inputmode="tel" autocomplete="tel" placeholder="(27) 99999-9999">
+          </div>
+          <div class="form-field">
+            <label for="customerEmail">E-mail *</label>
+            <input id="customerEmail" type="email" autocomplete="email" placeholder="voce@email.com">
+          </div>
+
+          <div class="form-field full">
+            <label for="customerCep">CEP *</label>
+            <div class="cep-row">
+              <input id="customerCep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000">
+              <button type="button" id="calcShippingBtn">Calcular frete</button>
+            </div>
+          </div>
+
+          <div class="form-field full">
+            <label for="customerStreet">Rua / Avenida *</label>
+            <input id="customerStreet" autocomplete="address-line1" placeholder="Endereço">
+          </div>
+
+          <div class="form-field full">
+            <div class="address-row">
+              <div class="form-field">
+                <label for="customerNumber">Número *</label>
+                <input id="customerNumber" autocomplete="address-line2" placeholder="123">
+              </div>
+              <div class="form-field">
+                <label for="customerComplement">Complemento</label>
+                <input id="customerComplement" placeholder="Apto, bloco...">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="customerNeighborhood">Bairro *</label>
+            <input id="customerNeighborhood" placeholder="Bairro">
+          </div>
+          <div class="form-field">
+            <label for="customerCity">Cidade *</label>
+            <input id="customerCity" autocomplete="address-level2" placeholder="Cidade">
+          </div>
+          <div class="form-field">
+            <label for="customerState">UF *</label>
+            <input id="customerState" maxlength="2" autocomplete="address-level1" placeholder="ES">
+          </div>
+        </div>
+
+        <div class="shipping-status" id="shippingStatus">Informe o CEP para ver as opções de entrega.</div>
+        <div class="shipping-options" id="shippingOptions"></div>
+        <div class="checkout-alert" id="checkoutAlert"></div>
+      </section>
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-breakdown">
+        <div><span>Produtos</span><strong id="productsTotal">R$ 0,00</strong></div>
+        <div><span>Frete</span><strong id="shippingTotal">A calcular</strong></div>
+        <div class="grand-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
+      </div>
+      <button class="btn primary full" id="checkoutBtn">Continuar para pagamento</button>
+      <small>O frete selecionado será somado ao pedido e o pagamento será processado pelo Mercado Pago.</small>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast">Produto adicionado ao carrinho ✨</div>
+
+  <script>
+const STORE_WHATSAPP = "5527988847061";
+
+const products = [
+  { id: 1, name: "Lip Gloss Triple Glow", category: "labios", price: 19.99, oldPrice: 26.97, badge: "Oferta", shape: "slim", label: "Gloss" },
+  { id: 2, name: "Bruma Fixadora Facial", category: "pele", price: 9.99, oldPrice: null, badge: "Queridinho", shape: "soft", label: "Bruma" },
+  { id: 3, name: "Cílios Postiços", category: "olhos", price: 17.99, oldPrice: null, badge: "Destaque", shape: "round dark", label: "JL" },
+  { id: 4, name: "Água Micelar com AH + Vitamina E", category: "pele", price: 13.80, oldPrice: null, badge: "Skincare", shape: "soft", label: "Micelar" },
+  { id: 5, name: "Body Splash Lovely 100ml", category: "corpo", price: 9.99, oldPrice: 15.97, badge: "Promo", shape: "", label: "Lovely" },
+  { id: 6, name: "Kit de Pincéis", category: "olhos", price: 17.97, oldPrice: null, badge: "Kit", shape: "round", label: "Pincéis" },
+  { id: 7, name: "Sabonete Líquido 200ml", category: "corpo", price: 9.99, oldPrice: 19.99, badge: "50% OFF", shape: "soft", label: "Clean" },
+  { id: 8, name: "Modeladora de Sobrancelha", category: "olhos", price: 9.99, oldPrice: 17.98, badge: "Oferta", shape: "slim dark", label: "Brow" }
+];
+
+let cart = JSON.parse(localStorage.getItem("jlmakeup-cart") || "[]");
+let selectedShipping = null;
+let shippingOptionsCache = [];
+
+const productGrid = document.getElementById("productGrid");
+const cartDrawer = document.getElementById("cartDrawer");
+const cartOverlay = document.getElementById("cartOverlay");
+const cartItems = document.getElementById("cartItems");
+const cartCount = document.getElementById("cartCount");
+const cartTotal = document.getElementById("cartTotal");
+const productsTotal = document.getElementById("productsTotal");
+const shippingTotal = document.getElementById("shippingTotal");
+const shippingStatus = document.getElementById("shippingStatus");
+const shippingOptionsEl = document.getElementById("shippingOptions");
+const checkoutAlert = document.getElementById("checkoutAlert");
+const toast = document.getElementById("toast");
+
+const money = value => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+function renderProducts(filter = "todos") {
+  const visible = filter === "todos" ? products : products.filter(p => p.category === filter);
+
+  productGrid.innerHTML = visible.map(product => `
+    <article class="product-card">
+      <div class="product-image">
+        <span class="product-badge">${product.badge}</span>
+        <div class="product-shape ${product.shape}">${product.label}</div>
+      </div>
+      <div class="product-info">
+        <small>${categoryName(product.category)}</small>
+        <h3>${product.name}</h3>
+        <div class="price-row">
+          <div>
+            <span class="price">${money(product.price)}</span>
+            ${product.oldPrice ? `<span class="old-price">${money(product.oldPrice)}</span>` : ""}
+          </div>
+          <button class="add-btn" onclick="addToCart(${product.id})" aria-label="Adicionar ${product.name} ao carrinho">+</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+function categoryName(category) {
+  const map = { labios: "Lábios", pele: "Pele", olhos: "Olhos", corpo: "Corpo" };
+  return map[category] || category;
+}
+
+function addToCart(id) {
+  const found = cart.find(item => item.id === id);
+  if (found) {
+    found.qty += 1;
+  } else {
+    cart.push({ id, qty: 1 });
+  }
+  persistCart();
+  showToast();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+  persistCart();
+}
+
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  persistCart();
+}
+
+function persistCart() {
+  localStorage.setItem("jlmakeup-cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function getProductsSubtotal() {
+  return cart.reduce((sum, item) => {
+    const product = products.find(p => p.id === item.id);
+    return sum + (product ? product.price * item.qty : 0);
+  }, 0);
+}
+
+function renderTotals() {
+  const subtotal = getProductsSubtotal();
+  const shipping = selectedShipping ? Number(selectedShipping.price) : 0;
+  productsTotal.textContent = money(subtotal);
+  shippingTotal.textContent = selectedShipping ? money(shipping) : "A calcular";
+  cartTotal.textContent = money(subtotal + shipping);
+}
+
+function renderCart() {
+  const quantity = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = quantity;
+
+  if (!cart.length) {
+    cartItems.innerHTML = `<div class="cart-empty">Seu carrinho está vazio.<br>Escolha seus favoritos ✨</div>`;
+    selectedShipping = null;
+    shippingOptionsCache = [];
+    shippingOptionsEl.innerHTML = "";
+    shippingStatus.textContent = "Adicione produtos para calcular a entrega.";
+    renderTotals();
+    return;
+  }
+
+  cartItems.innerHTML = cart.map(item => {
+    const product = products.find(p => p.id === item.id);
+    const subtotal = product.price * item.qty;
+    return `
+      <div class="cart-item">
+        <div class="cart-thumb">JL</div>
+        <div>
+          <h4>${product.name}</h4>
+          <p>${money(product.price)} cada</p>
+          <div class="qty-controls">
+            <button onclick="changeQty(${item.id}, -1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <div>
+          <strong>${money(subtotal)}</strong>
+          <button class="remove-btn" onclick="removeItem(${item.id})" aria-label="Remover item">×</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  renderTotals();
+}
+
+function openCart() {
+  cartDrawer.classList.add("open");
+  cartOverlay.classList.add("show");
+  document.body.classList.add("no-scroll");
+}
+
+function closeCart() {
+  cartDrawer.classList.remove("open");
+  cartOverlay.classList.remove("show");
+  document.body.classList.remove("no-scroll");
+}
+
+function showToast() {
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1700);
+}
+
+
+function cleanCep(value) {
+  return String(value || "").replace(/\D/g, "").slice(0, 8);
+}
+
+function maskCep(value) {
+  const digits = cleanCep(value);
+  return digits.length > 5 ? `${digits.slice(0,5)}-${digits.slice(5)}` : digits;
+}
+
+function maskPhone(value) {
+  const d = String(value || "").replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+}
+
+function showCheckoutAlert(message) {
+  checkoutAlert.textContent = message;
+  checkoutAlert.classList.add("show");
+}
+
+function hideCheckoutAlert() {
+  checkoutAlert.classList.remove("show");
+  checkoutAlert.textContent = "";
+}
+
+function getCustomerData() {
+  return {
+    name: document.getElementById("customerName").value.trim(),
+    phone: document.getElementById("customerPhone").value.trim(),
+    email: document.getElementById("customerEmail").value.trim(),
+    address: {
+      postal_code: cleanCep(document.getElementById("customerCep").value),
+      street: document.getElementById("customerStreet").value.trim(),
+      number: document.getElementById("customerNumber").value.trim(),
+      complement: document.getElementById("customerComplement").value.trim(),
+      neighborhood: document.getElementById("customerNeighborhood").value.trim(),
+      city: document.getElementById("customerCity").value.trim(),
+      state: document.getElementById("customerState").value.trim().toUpperCase()
+    }
+  };
+}
+
+function validateCustomer(customer) {
+  if (!customer.name || customer.name.length < 3) return "Informe o nome completo.";
+  if (customer.phone.replace(/\D/g, "").length < 10) return "Informe um telefone/WhatsApp válido.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) return "Informe um e-mail válido.";
+  if (customer.address.postal_code.length !== 8) return "Informe um CEP válido.";
+  if (!customer.address.street) return "Informe a rua/avenida.";
+  if (!customer.address.number) return "Informe o número do endereço.";
+  if (!customer.address.neighborhood) return "Informe o bairro.";
+  if (!customer.address.city) return "Informe a cidade.";
+  if (customer.address.state.length !== 2) return "Informe a UF com 2 letras.";
+  return null;
+}
+
+async function lookupCep() {
+  const cepInput = document.getElementById("customerCep");
+  const cep = cleanCep(cepInput.value);
+  cepInput.value = maskCep(cep);
+
+  if (cep.length !== 8) {
+    showCheckoutAlert("Digite um CEP com 8 números.");
+    return false;
+  }
+
+  try {
+    shippingStatus.textContent = "Buscando endereço...";
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await response.json();
+
+    if (!response.ok || data.erro) throw new Error("CEP não encontrado");
+
+    document.getElementById("customerStreet").value = data.logradouro || "";
+    document.getElementById("customerNeighborhood").value = data.bairro || "";
+    document.getElementById("customerCity").value = data.localidade || "";
+    document.getElementById("customerState").value = data.uf || "";
+    hideCheckoutAlert();
+    return true;
+  } catch (error) {
+    showCheckoutAlert("Não consegui localizar esse CEP. Confira e tente novamente.");
+    shippingStatus.textContent = "CEP não localizado.";
+    return false;
+  }
+}
+
+function formatDelivery(option) {
+  if (option.delivery_range && (option.delivery_range.min || option.delivery_range.max)) {
+    const min = option.delivery_range.min;
+    const max = option.delivery_range.max;
+    if (min && max && min !== max) return `${min} a ${max} dias úteis`;
+    return `${min || max} dias úteis`;
+  }
+  if (option.delivery_time) return `até ${option.delivery_time} dias úteis`;
+  return "prazo informado pela transportadora";
+}
+
+function renderShippingOptions(options) {
+  shippingOptionsCache = options;
+  selectedShipping = null;
+  renderTotals();
+
+  if (!options.length) {
+    shippingOptionsEl.innerHTML = "";
+    shippingStatus.textContent = "Nenhuma modalidade de frete disponível para esse CEP.";
+    return;
+  }
+
+  shippingStatus.textContent = "Escolha uma opção de entrega:";
+  shippingOptionsEl.innerHTML = options.map((option, idx) => `
+    <label class="shipping-option" data-shipping-index="${idx}">
+      <input type="radio" name="shippingOption" value="${idx}">
+      <div>
+        <strong>${option.company ? `${option.company} • ` : ""}${option.name}</strong>
+        <small>${formatDelivery(option)}</small>
+      </div>
+      <span class="shipping-price">${money(Number(option.price))}</span>
+    </label>
+  `).join("");
+
+  shippingOptionsEl.querySelectorAll('input[name="shippingOption"]').forEach(input => {
+    input.addEventListener("change", () => {
+      const idx = Number(input.value);
+      selectedShipping = shippingOptionsCache[idx];
+      document.querySelectorAll(".shipping-option").forEach(el => el.classList.remove("selected"));
+      input.closest(".shipping-option").classList.add("selected");
+      hideCheckoutAlert();
+      renderTotals();
+    });
+  });
+}
+
+async function calculateShipping() {
+  if (!cart.length) {
+    showCheckoutAlert("Adicione pelo menos um produto ao carrinho.");
+    return;
+  }
+
+  const cepOk = await lookupCep();
+  if (!cepOk) return;
+
+  const cep = cleanCep(document.getElementById("customerCep").value);
+  const button = document.getElementById("calcShippingBtn");
+  const oldText = button.textContent;
+
+  try {
+    button.disabled = true;
+    button.textContent = "Calculando...";
+    shippingStatus.textContent = "Consultando a SuperFrete...";
+    shippingOptionsEl.innerHTML = "";
+    selectedShipping = null;
+    renderTotals();
+
+    const response = await fetch("/api/shipping-quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ postal_code: cep })
+    });
+    const data = await response.json();
+
+    if (!response.ok) throw new Error(data.error || "Falha no cálculo do frete.");
+    renderShippingOptions(data.options || []);
+  } catch (error) {
+    console.error(error);
+    shippingStatus.textContent = "Não foi possível calcular o frete agora.";
+    showCheckoutAlert(error.message || "Erro ao consultar a SuperFrete.");
+  } finally {
+    button.disabled = false;
+    button.textContent = oldText;
+  }
+}
+
+async function checkoutOnline() {
+  if (!cart.length) {
+    alert("Seu carrinho está vazio.");
+    return;
+  }
+
+  hideCheckoutAlert();
+  const customer = getCustomerData();
+  const validationError = validateCustomer(customer);
+  if (validationError) {
+    showCheckoutAlert(validationError);
+    document.getElementById("deliverySection").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (!selectedShipping) {
+    showCheckoutAlert("Calcule o frete e escolha uma opção de entrega antes de pagar.");
+    return;
+  }
+
+  const button = document.getElementById("checkoutBtn");
+  const originalText = button.textContent;
+
+  try {
+    button.disabled = true;
+    button.textContent = "Abrindo pagamento...";
+
+    const payload = {
+      items: cart.map(item => ({ id: item.id, qty: item.qty })),
+      customer,
+      shipping: {
+        service_id: selectedShipping.id
+      }
+    };
+
+    const response = await fetch("/api/create-preference", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.checkout_url) {
+      throw new Error(data.error || "Não foi possível iniciar o pagamento.");
+    }
+
+    localStorage.setItem("jlmakeup-last-order", JSON.stringify({
+      customer,
+      shipping: data.shipping || selectedShipping,
+      products_total: getProductsSubtotal(),
+      created_at: new Date().toISOString()
+    }));
+
+    window.location.href = data.checkout_url;
+  } catch (error) {
+    console.error(error);
+    showCheckoutAlert(error.message || "Não foi possível abrir o pagamento.");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
+
+document.getElementById("filters").addEventListener("click", e => {
+  const btn = e.target.closest(".filter");
+  if (!btn) return;
+  document.querySelectorAll(".filter").forEach(f => f.classList.remove("active"));
+  btn.classList.add("active");
+  renderProducts(btn.dataset.filter);
+});
+
+document.getElementById("cartBtn").addEventListener("click", openCart);
+document.getElementById("closeCart").addEventListener("click", closeCart);
+document.getElementById("cartOverlay").addEventListener("click", closeCart);
+document.getElementById("checkoutBtn").addEventListener("click", checkoutOnline);
+document.getElementById("calcShippingBtn").addEventListener("click", calculateShipping);
+document.getElementById("customerCep").addEventListener("input", e => {
+  e.target.value = maskCep(e.target.value);
+  selectedShipping = null;
+  shippingOptionsEl.innerHTML = "";
+  shippingStatus.textContent = "CEP alterado. Calcule o frete novamente.";
+  renderTotals();
+});
+document.getElementById("customerCep").addEventListener("blur", () => {
+  const cep = cleanCep(document.getElementById("customerCep").value);
+  if (cep.length === 8 && !shippingOptionsCache.length) lookupCep();
+});
+document.getElementById("customerPhone").addEventListener("input", e => {
+  e.target.value = maskPhone(e.target.value);
+});
+
+const menu = document.getElementById("mobileMenu");
+document.getElementById("menuBtn").addEventListener("click", () => menu.classList.add("open"));
+document.getElementById("closeMenu").addEventListener("click", () => menu.classList.remove("open"));
+menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => menu.classList.remove("open")));
+
+document.getElementById("whatsappDirect").addEventListener("click", (e) => {
+  e.preventDefault();
+  const msg = encodeURIComponent("Olá! Vim pelo site da JLMAKEUP e gostaria de atendimento. 💖");
+  window.open(`https://wa.me/${STORE_WHATSAPP}?text=${msg}`, "_blank");
+});
+
+renderProducts();
+renderCart();
+
+</script>
+</body>
+</html>
