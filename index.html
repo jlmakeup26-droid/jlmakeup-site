@@ -1110,7 +1110,7 @@ footer {
           <span class="eyebrow">Mais desejados</span>
           <h2>Produtos em destaque</h2>
         </div>
-        <p>Monte seu carrinho e envie o pedido direto para o WhatsApp da loja.</p>
+        <p>Monte seu carrinho, calcule o frete pelo CEP e finalize seu pedido com segurança.</p>
       </div>
 
       <div class="filters" id="filters">
@@ -1302,7 +1302,7 @@ footer {
   <div class="toast" id="toast">Produto adicionado ao carrinho ✨</div>
 
   <script>
-const STORE_WHATSAPP = "5500000000000"; // TROQUE pelo WhatsApp da loja com DDI + DDD + número.
+const STORE_WHATSAPP = "5527988847061";
 
 const products = [
   { id: 1, name: "Lip Gloss Triple Glow", category: "labios", price: 19.99, oldPrice: 26.97, badge: "Oferta", shape: "slim", label: "Gloss" },
@@ -1619,7 +1619,7 @@ async function calculateShipping() {
     selectedShipping = null;
     renderTotals();
 
-    const response = await fetch("/.netlify/functions/shipping-quote", {
+    const response = await fetch("/api/shipping-quote", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ postal_code: cep })
@@ -1673,7 +1673,7 @@ async function checkoutOnline() {
       }
     };
 
-    const response = await fetch("/.netlify/functions/create-preference", {
+    const response = await fetch("/api/create-preference", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -1737,7 +1737,7 @@ menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => menu.c
 
 document.getElementById("whatsappDirect").addEventListener("click", (e) => {
   e.preventDefault();
-  const msg = encodeURIComponent("Olá! Vim pelo site da JLMAKEUP e gostaria de atendimento 💖");
+  const msg = encodeURIComponent("Olá! Vim pelo site da JLMAKEUP e gostaria de atendimento. 💖");
   window.open(`https://wa.me/${STORE_WHATSAPP}?text=${msg}`, "_blank");
 });
 
